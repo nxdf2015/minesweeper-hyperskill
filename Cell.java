@@ -51,6 +51,10 @@ public class Cell {
         return current;
     }
 
+    public void setCurrent(State current) {
+        this.current = current;
+    }
+
     @Override
     public String toString() {
         return "Cell{" +
@@ -58,5 +62,18 @@ public class Cell {
                 ", state=" + state +
                 ", current=" + current +
                 '}';
+    }
+
+    public boolean isNotExplored() {
+        return current != State.E;
+    }
+
+    public void explored() {
+
+        current = State.E;
+    }
+
+    public boolean isExplored() {
+        return current == State.E;
     }
 }

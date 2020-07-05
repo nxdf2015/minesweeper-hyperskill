@@ -3,7 +3,9 @@ package minesweeper;
 public  enum State {
     S("."),
     M("."),
-    P("*");
+    P("*"),
+    E("/");
+
 
     private String value;
     State(String value) {

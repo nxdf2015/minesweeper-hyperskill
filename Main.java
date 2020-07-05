@@ -15,24 +15,35 @@ public class Main {
     public static void main(String[] args) {
         System.out.print("How many mines do you want on the field? ");
         Scanner scanner = new Scanner(System.in);
-        int countMine = scanner.nextInt();
-        Field field = new Field(9 , countMine);
-        System.out.println(field);
+        int countMine = Integer.parseInt(scanner.nextLine());
 
-        while(!field.findAll()) {
+        Game game = new Game(countMine);
+        System.out.println(game.showField());
+        boolean win = true;
+        boolean start= true;
 
-            System.out.println("Set/delete mines marks (x and y coordinates): ");
-            int col = scanner.nextInt() - 1;
-            int row = scanner.nextInt() -1 ;
+        do{
+            System.out.println("Set/unset mines marks or claim a cell as free: ");
+           String[] line = scanner.nextLine().split(" ");
+           int  col = Integer.parseInt(line[0])-1;
+            int  row = Integer.parseInt(line[1])-1;
 
-            if (!field.isNumber(row,col)){
-                field.play(row,col);
-                System.out.println(field);
+             if (start) {
+                 game.setField(Point.of(row, col));
+                 start = false;
+             }
+
+            String type = line[2];
+            game.play(col,row,type);
+
+            System.out.println(game.showField());
+            if (game.isGameOver()){
+                System.out.println("You stepped on a mine and failed!");
+                win = false;
+                break;
             }
-            else {
-                System.out.println("There is a number here!");
-            }
-        }
-        System.out.println("Congratulations! You found all mines!");
+        }while(game.active());
+        if(win)
+            System.out.println("Congratulations! You found all mines!");
     }
 }
